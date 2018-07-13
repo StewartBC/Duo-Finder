@@ -237,14 +237,10 @@
                                 }
                             }
                         }
-                        console.log(typeof bestMatch);
-                        console.log(bestMatch);
                         if (typeof bestMatch !== "object") {
                             bestMatch = players[Math.floor(Math.random() * players.length)];
-                            console.log("none  " + bestMatch)
                             $("#title").html("<p>Unfortunately, there aren't enough players in our database to match you with someone with a nearly identical playstyle, so the following player may not be fully compatible.</p>")
                         } else {
-                            console.log("match");
                             $("#title").html("Best Match");
                         }
                     $("#user").html("Name: " + bestMatch.name);
