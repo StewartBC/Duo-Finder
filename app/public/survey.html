@@ -222,10 +222,8 @@
                             var bestPlayerIndex = 0;
                             if (players[i].region === newPlayer.region && players[i].rank === newPlayer.rank && players[i].role !== newPlayer.role && players[i].type === newPlayer.type && players[i].playstyle === newPlayer.playstyle && players[i].voice === newPlayer.voice) {
                                 compatible.push(players[i]);
-                                console.log(players[i]);
                             }
                             for (j = 0; j < compatible.length; j++) {
-                                console.log(compatible);
                                 var score = 0;
                                 var roamScore = Math.abs(compatible[i].roam - newPlayer.roam);
                                 var scaleScore = Math.abs(compatible[i].scale - newPlayer.scale);
