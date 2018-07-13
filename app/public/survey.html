@@ -159,7 +159,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title">Best Match</h3>
+                        <h3 class="modal-title" id="title">Best Match</h3>
                     </div>
                     <!-- <div class="modal-body"> -->
                         <div class="containter">
@@ -167,17 +167,17 @@
                             </div>
                             <div class="col-md-8">
                                 <ul>
-                                    <li id="user">Name: </li>
+                                    <li id="user"></li>
                                     <li id="profile"></li>
-                                    <li id="division">Rank: </li>
-                                    <li id="position">Preferred Role: </li>
-                                    <li id="champ">Main Champion: </li>
-                                    <li id="tank">Support Type Preference: </li>
-                                    <li id="aggro">Plays Aggressive: </li>
-                                    <li id="speak">Voice Chat: </li>
-                                    <li id="roamOdds">Likelihood to Roam: </li>
-                                    <li id="scalePref">Scaling Quotient: </li>
-                                    <li id="obj">Objective Quotient: </li>
+                                    <li id="division"></li>
+                                    <li id="position"></li>
+                                    <li id="champ"></li>
+                                    <li id="tank"></li>
+                                    <li id="aggro"></li>
+                                    <li id="speak"></li>
+                                    <li id="roamOdds"></li>
+                                    <li id="scalePref"></li>
+                                    <li id="obj"></li>
                                 </ul>
                             </div>
                         </div>
@@ -193,7 +193,6 @@
 </body>
 
 <script>
-    dummyPlayers = {};
     $("#submit").on("click", function (event) {
         event.preventDefault();
         var newPlayer = {
@@ -209,40 +208,14 @@
             scale: $("#scale").val().replace(/ *\([^)]*\) */g, ""),
             objective: $("#objective").val().replace(/ *\([^)]*\) */g, "")
         }
-        console.log(newPlayer);
         $.post("/api", newPlayer)
             .then(function (data) {
                 $.ajax({
                     url: "/api",
                     method: "GET"
                 }).then(function (response) {
-                    console.log(response);
                     var players = response.players;
                     var bestMatch;
-                    if (players.length < 1) {
-                        $.post("/api", dummyPlayers)
-                            .then(function (response) {
-                                for (i = 0; i < players.length; i++) {
-                                    var compatible = [];
-                                    var bestScore = 1000;
-                                    var bestPlayerIndex = 0;
-                                    if (players[i].region === newPlayer.region && players[i].rank === newPlayer.rank && players[i].role !== newPlayer.role && players[i].type === newPlayer.type && players[i].playstyle === newPlayer.playstyle && players[i].voice === newPlayer.voice) {
-                                        compatible.push(players[i]);
-                                    }
-                                    for (j = 0; j < compatible.length; j++) {
-                                        var score = 0;
-                                        var roamScore = Math.abs(compatible[i].roam - newPlayer.roam);
-                                        var scaleScore = Math.abs(compatible[i].scale - newPlayer.scale);
-                                        var objectiveScore = Math.abs(compatible[i].objective - newPlayer.objective);
-                                        score = roamScore + scaleScore + objectiveScore;
-                                        if (score < bestScore) {
-                                            bestScore = score;
-                                            bestMatch = compatible[i];
-                                        }
-                                    }
-                                }
-                            })
-                    } else {
                         for (i = 0; i < players.length; i++) {
                             var compatible = [];
                             var bestScore = 1000;
@@ -264,29 +237,38 @@
                                 }
                             }
                         }
-                    }
-                    $("#user").append(bestMatch.name);
-                    $("#pic").append("<img src='https://ddragon.leagueoflegends.com/cdn/8.13.1/img/champion/" + bestMatch.main + ".png' alt='" + bestMatch.main + "'>");
-                    $("#division").append(bestMatch.rank);
-                    $("#position").append(bestMatch.role);
-                    $("#champ").append(bestMatch.main);
-                    $("#tank").append(bestMatch.type);
+                        console.log(typeof bestMatch);
+                        console.log(bestMatch);
+                        if (typeof bestMatch !== "object") {
+                            bestMatch = players[Math.floor(Math.random() * players.length)];
+                            console.log("none  " + bestMatch)
+                            $("#title").html("<p>Unfortunately, there aren't enough players in our database to match you with someone with a nearly identical playstyle, so the following player may not be fully compatible.</p>")
+                        } else {
+                            console.log("match");
+                            $("#title").html("Best Match");
+                        }
+                    $("#user").html("Name: " + bestMatch.name);
+                    $("#pic").html("<img src='https://ddragon.leagueoflegends.com/cdn/8.13.1/img/champion/" + bestMatch.main + ".png' alt='" + bestMatch.main + "'>");
+                    $("#division").html("Rank: " + bestMatch.rank);
+                    $("#position").html("Preferred Role: " + bestMatch.role);
+                    $("#champ").html("Main Champion: " + bestMatch.main);
+                    $("#tank").html("Support Type Preference: " + bestMatch.type);
                     if (bestMatch.playstyle === "Aggressively") {
-                        $("#aggro").append("Yes")
+                        $("#aggro").html("Plays Aggressivley: Yes");
                     } else {
-                        $("#aggro").append("No")
+                        $("#aggro").html("Plays Aggressively: No");
                     }
                     if (bestMatch.region === "Americas") {
-                        $("#profile").append("<a href='http://na.op.gg/summoner/userName=" + bestMatch.name + "' target='_blank'>Profile Link</a>");
+                        $("#profile").html("<a href='http://na.op.gg/summoner/userName=" + bestMatch.name + "' target='_blank'>Profile Link</a>");
                     } else if (bestMatch.region === "Europe") {
-                        $("#profile").append("<a href='http://euw.op.gg/summoner/userName=" + bestMatch.name + "' target='_blank'>Profile Link</a>");
+                        $("#profile").html("<a href='http://euw.op.gg/summoner/userName=" + bestMatch.name + "' target='_blank'>Profile Link</a>");
                     } else {
-                        $("#profile").append("<a href='http://www.op.gg/summoner/userName=" + bestMatch.name + "' target='_blank'>Profile Link</a>");
+                        $("#profile").html("<a href='http://www.op.gg/summoner/userName=" + bestMatch.name + "' target='_blank'>Profile Link</a>");
                     }
-                    $("#speak").append(bestMatch.voice);
-                    $("#roamOdds").append(bestMatch.roam);
-                    $("#scalePref").append(bestMatch.scale);
-                    $("#obj").append(bestMatch.objective);
+                    $("#speak").html("Voice Chat: " + bestMatch.voice);
+                    $("#roamOdds").html("Likelyhood to Roam: " + bestMatch.roam);
+                    $("#scalePref").html("Scaling Quotient: " + bestMatch.scale);
+                    $("#obj").html("Objective Quotient: " + bestMatch.objective);
                 });
             });
         $("#results-modal").modal("toggle");
