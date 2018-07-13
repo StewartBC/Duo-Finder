@@ -220,7 +220,7 @@
                             var compatible = [];
                             var bestScore = 1000;
                             var bestPlayerIndex = 0;
-                            if (players[i].region === newPlayer.region && players[i].rank === newPlayer.rank && players[i].role !== newPlayer.role) {
+                            if (players[i].region === newPlayer.region && players[i].rank === newPlayer.rank && players[i].role !== newPlayer.role && players[i].type === newPlayer.type && players[i].playstyle === newPlayer.playstyle && players[i].voice === newPlayer.voice) {
                                 compatible.push(players[i]);
                             }
                             for (j = 0; j < compatible.length; j++) {
