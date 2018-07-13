@@ -1,0 +1,30 @@
+{
+  "name": "duo-finder",
+  "version": "1.0.0",
+  "description": "express app to help you find a partner to play League of Legends with",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StewartBC/Duo-Finder.git"
+  },
+  "keywords": [
+    "express",
+    "node",
+    "league"
+  ],
+  "author": "Stewart Capps",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StewartBC/Duo-Finder/issues"
+  },
+  "homepage": "https://github.com/StewartBC/Duo-Finder#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "path": "^0.12.7"
+  }
+}

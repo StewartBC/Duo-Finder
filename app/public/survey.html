@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <title>Duo Finder</title>
+</head>
+<style>
+    select {
+        width: 250px;
+        margin-bottom: 30px
+    }
+    button {
+        width: 250px;
+    }
+    #submit {
+        margin-bottom: 25px;
+    }
+    img {
+        margin-top: 60px;
+        margin-left: 45px;
+    }
+
+</style>
+
+<body>
+    <div class="container">
+        <h2>Survey Questions</h2>
+        <hr>
+        <h3>About You</h3>
+        <h4>Summoner Name (Required)</h4>
+        <input type="text" id="name" class="form-control" required>
+        <hr>
+        <h3>Question 1</h3>
+        <h4>What region do you play on?</h4>
+        <select id="region">
+            <option selected disabled>Choose an option</option>
+            <option>Americas</option>
+            <option>Europe</option>
+            <option>Asia</option>
+        </select>
+        <h3>Question 2</h3>
+        <h4>What is your ranked division?</h4>
+        <select id="rank">
+            <option selected disabled>Choose an option</option>
+            <option>Bronze</option>
+            <option>Silver</option>
+            <option>Gold</option>
+            <option>Platinum</option>
+            <option>Diamond</option>
+            <option>Master or Challenger</option>
+        </select>
+        <h3>Question 3</h3>
+        <h4>What is your preferred role?</h4>
+        <select id="role">
+            <option selected disabled>Choose an option</option>
+            <option>AD Carry</option>
+            <option>Support</option>
+        </select>
+        <h3>Question 4</h3>
+        <h4>Who is your main champion?</h4>
+        <select id="main">
+            <option selected disabled>Choose an option</option>
+            <option>Alistar</option>
+            <option>Ashe</option>
+            <option>Blitzcrank</option>
+            <option>Brand</option>
+            <option>Braum</option>
+            <option>Caitlyn</option>
+            <option>Ezreal</option>
+            <option>Janna</option>
+            <option>Jhin</option>
+            <option>Jinx</option>
+            <option>Kaisa</option>
+            <option>Kalista</option>
+            <option>KogMaw</option>
+            <option>Leona</option>
+            <option>Lucian</option>
+            <option>Lulu</option>
+            <option>Lux</option>
+            <option>MissFortune</option>
+            <option>Morgana</option>
+            <option>Nami</option>
+            <option>Pyke</option>
+            <option>Rakan</option>
+            <option>Sivir</option>
+            <option>Sona</option>
+            <option>Soraka</option>
+            <option>TahmKench</option>
+            <option>Taric</option>
+            <option>Thresh</option>
+            <option>Twitch</option>
+            <option>Varus</option>
+            <option>Vayne</option>
+            <option>Xayah</option>
+            <option>Zilean</option>
+            <option>Zyra</option>
+        </select>
+        <h3>Question 5</h3>
+        <h4>What type of supportive champion do you prefer to play with?</h4>
+        <select id="type">
+            <option selected disabled>Choose an option</option>
+            <option>Mage</option>
+            <option>Tank</option>
+        </select>
+        <h3>Question 6</h3>
+        <h4>Do you prefer to play passively or aggressively</h4>
+        <select id="playstyle">
+            <option selected disabled>Choose an option</option>
+            <option>Aggressively</option>
+            <option>Passively</option>
+        </select>
+        <h3>Question 7</h3>
+        <h4>Do you prefer to use voice chat?</h4>
+        <select id="voice">
+            <option selected disabled>Choose an option</option>
+            <option>Yes</option>
+            <option>No</option>
+        </select>
+        <h3>Question 8</h3>
+        <h4>How likely are you to roam in lane?</h4>
+        <select id="roam">
+            <option selected disabled>Choose an option</option>
+            <option>1 (very unlikely)</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5 (very likely)</option>
+        </select>
+        <h3>Question 9</h3>
+        <h4>How much do you like to play for late game and scale?</h4>
+        <select id="scale">
+            <option selected disabled>Choose an option</option>
+            <option>1 (I play best in the early game)</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5 (I play best the late game)</option>
+        </select>
+        <h3>Question 10</h3>
+        <h4>How likely are you to go for objectives over kills?</h4>
+        <select id="objective">
+            <option selected disabled>Choose an option</option>
+            <option>1 (screw objectives, I just want kills)</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5 (objectives over everything)</option>
+        </select>
+        <br>
+        <button id="submit" type="submit" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalCenter">Submit</button>
+
+        <div class="modal fade" id="modalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Best Match</h3>
+                    </div>
+                    <!-- <div class="modal-body"> -->
+                        <div class="containter">
+                            <div class="col-md-4" id="pic">
+                            </div>
+                            <div class="col-md-8">
+                                <ul>
+                                    <li id="user">Name: </li>
+                                    <li id="profile"></li>
+                                    <li id="division">Rank: </li>
+                                    <li id="position">Preferred Role: </li>
+                                    <li id="champ">Main Champion: </li>
+                                    <li id="tank">Support Type Preference: </li>
+                                    <li id="aggro">Plays Aggressive: </li>
+                                    <li id="speak">Voice Chat: </li>
+                                    <li id="roamOdds">Likelihood to Roam: </li>
+                                    <li id="scalePref">Scaling Quotient: </li>
+                                    <li id="obj">Objective Quotient: </li>
+                                </ul>
+                            </div>
+                        </div>
+                    <!-- </div> -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+<script>
+    dummyPlayers = {};
+    $("#submit").on("click", function (event) {
+        event.preventDefault();
+        var newPlayer = {
+            name: $("#name").val().trim(),
+            region: $("#region").val(),
+            rank: $("#rank").val(),
+            role: $("#role").val(),
+            main: $("#main").val(),
+            type: $("#type").val(),
+            playstyle: $("#playstyle").val(),
+            voice: $("#voice").val(),
+            roam: $("#roam").val().replace(/ *\([^)]*\) */g, ""),
+            scale: $("#scale").val().replace(/ *\([^)]*\) */g, ""),
+            objective: $("#objective").val().replace(/ *\([^)]*\) */g, "")
+        }
+        console.log(newPlayer);
+        $.post("/api", newPlayer)
+            .then(function (data) {
+                $.ajax({
+                    url: "/api",
+                    method: "GET"
+                }).then(function (response) {
+                    console.log(response);
+                    var players = response.players;
+                    var bestMatch;
+                    if (players.length < 1) {
+                        $.post("/api", dummyPlayers)
+                            .then(function (response) {
+                                for (i = 0; i < players.length; i++) {
+                                    var compatible = [];
+                                    var bestScore = 1000;
+                                    var bestPlayerIndex = 0;
+                                    if (players[i].region === newPlayer.region && players[i].rank === newPlayer.rank && players[i].role !== newPlayer.role && players[i].type === newPlayer.type && players[i].playstyle === newPlayer.playstyle && players[i].voice === newPlayer.voice) {
+                                        compatible.push(players[i]);
+                                    }
+                                    for (j = 0; j < compatible.length; j++) {
+                                        var score = 0;
+                                        var roamScore = Math.abs(compatible[i].roam - newPlayer.roam);
+                                        var scaleScore = Math.abs(compatible[i].scale - newPlayer.scale);
+                                        var objectiveScore = Math.abs(compatible[i].objective - newPlayer.objective);
+                                        score = roamScore + scaleScore + objectiveScore;
+                                        if (score < bestScore) {
+                                            bestScore = score;
+                                            bestMatch = compatible[i];
+                                        }
+                                    }
+                                }
+                            })
+                    } else {
+                        for (i = 0; i < players.length; i++) {
+                            var compatible = [];
+                            var bestScore = 1000;
+                            var bestPlayerIndex = 0;
+                            if (players[i].region === newPlayer.region && players[i].rank === newPlayer.rank && players[i].role !== newPlayer.role && players[i].type === newPlayer.type && players[i].playstyle === newPlayer.playstyle && players[i].voice === newPlayer.voice) {
+                                compatible.push(players[i]);
+                                console.log(players[i]);
+                            }
+                            for (j = 0; j < compatible.length; j++) {
+                                console.log(compatible);
+                                var score = 0;
+                                var roamScore = Math.abs(compatible[i].roam - newPlayer.roam);
+                                var scaleScore = Math.abs(compatible[i].scale - newPlayer.scale);
+                                var objectiveScore = Math.abs(compatible[i].objective - newPlayer.objective);
+                                score = roamScore + scaleScore + objectiveScore;
+                                if (score < bestScore) {
+                                    bestScore = score;
+                                    bestMatch = compatible[i];
+                                }
+                            }
+                        }
+                    }
+                    $("#user").append(bestMatch.name);
+                    $("#pic").append("<img src='https://ddragon.leagueoflegends.com/cdn/8.13.1/img/champion/" + bestMatch.main + ".png' alt='" + bestMatch.main + "'>");
+                    $("#division").append(bestMatch.rank);
+                    $("#position").append(bestMatch.role);
+                    $("#champ").append(bestMatch.main);
+                    $("#tank").append(bestMatch.type);
+                    if (bestMatch.playstyle === "Aggressively") {
+                        $("#aggro").append("Yes")
+                    } else {
+                        $("#aggro").append("No")
+                    }
+                    if (bestMatch.region === "Americas") {
+                        $("#profile").append("<a href='http://na.op.gg/summoner/userName=" + bestMatch.name + "' target='_blank'>Profile Link</a>");
+                    } else if (bestMatch.region === "Europe") {
+                        $("#profile").append("<a href='http://euw.op.gg/summoner/userName=" + bestMatch.name + "' target='_blank'>Profile Link</a>");
+                    } else {
+                        $("#profile").append("<a href='http://www.op.gg/summoner/userName=" + bestMatch.name + "' target='_blank'>Profile Link</a>");
+                    }
+                    $("#speak").append(bestMatch.voice);
+                    $("#roamOdds").append(bestMatch.roam);
+                    $("#scalePref").append(bestMatch.scale);
+                    $("#obj").append(bestMatch.objective);
+                });
+            });
+        $("#results-modal").modal("toggle");
+    })
+</script>
+
+</html>
